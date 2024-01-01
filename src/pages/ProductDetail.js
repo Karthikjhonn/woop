@@ -9,12 +9,33 @@ import { MdKeyboardArrowRight } from "react-icons/md";
 import { FiX } from "react-icons/fi";
 import { useParams } from 'react-router-dom';
 
-function WishList() {
+function WishList({id}) {
   const [wishState, setWishState] = useState(false);
-  function wishlistAdd() {
+  const likedProduct = JSON.parse(localStorage.getItem('likedProduct'));
+  useEffect(() => {
+    if (localStorage.getItem('likedProduct') == null) {
+        localStorage.setItem('likedProduct', '[]');
+        console.log("array created");
+    }
+    if (likedProduct != null) {
+        likedProduct.map((ID) => {
+            if (ID == id) {
+                // wishlistAdd();
+                setWishState(true)
+            }
+        })
+    }
+}, [])
+  function wishlistAdd(id) {
     if (wishState) {
+      const allLikedProduct = JSON.parse(localStorage.getItem('likedProduct'));
+      var removedProduct = allLikedProduct.filter(data => data !== id);
+      localStorage.setItem('likedProduct', JSON.stringify(removedProduct))
       setWishState(false);
     } else if (!wishState) {
+      const otherLikedProduct = JSON.parse(localStorage.getItem('likedProduct'));
+      otherLikedProduct.push(id)
+      localStorage.setItem('likedProduct', JSON.stringify(otherLikedProduct));
       setWishState(true);
     }
   }
@@ -84,7 +105,7 @@ function ProductPopup() {
           <MdKeyboardArrowRight className='text-lg' />
         </div>
       </div>
-      <div onClick={handelPopupClose} className={`bg-black/25 w-full h-svh fixed top-0 left-0 ${colorAndSize ? 'block' : information ? 'block' : description ? 'block' : 'hidden'}`}>
+      <div onClick={handelPopupClose} className={`bg-black/25 w-full h-dvh fixed top-0 left-0 ${colorAndSize ? 'block' : information ? 'block' : description ? 'block' : 'hidden'}`}>
         <div className='bg-white w-full pb-10 pt-1 px-4 bottom-0 absolute max-h-[75vh] overflow-y-scroll'>
           <div className='bg-black w-16 h-1 rounded-full mx-auto'></div>
           <div className='mt-4 sticky top-0'>
@@ -116,7 +137,7 @@ function ProductPopup() {
                 <div className='w-[30px] h-[30px] rounded-full p-1 bg-black'></div>
               </div>
             </div>
-          </> : information ? <><div className='mt-6 text-secondary font-medium text-lg'>Measurements</div><div className='mt-6 flex flex-col gap-3.5 max-h-[40vh] overflow-y-auto'>{productInformationList}</div><div className='mt-6 text-secondary font-medium text-lg'>composition</div><div className='flex justify-between items-center mt-6'><p className='text-secondary'>material : </p><p className='text-tertiary'>100% cotton</p></div><div className='mt-6 flex justify-between items-center'><div className='text-secondary font-medium text-lg'>Brand</div><p className=''></p></div></> : description ? <><div className='px-3 py-3.5 bg-tertiary mt-6 rounded-sm'><p>Description</p><p className='text-sm font-light mt-2'>"Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday"</p></div></> : <p>Not to found</p>}
+          </> : information ? <><div className='mt-6 text-secondary font-medium text-lg'>Measurements</div><div className='mt-6 flex flex-col gap-3.5 max-h-[40vh] overflow-y-auto'>{productInformationList}</div><div className='mt-6 text-secondary font-medium text-lg'>composition</div><div className='flex justify-between items-center mt-6'><p className='text-secondary'>material : </p><p className='text-tertiary'>100% cotton</p></div><div className='mt-6 flex justify-between items-center'><div className='text-secondary font-medium text-lg'>Brand</div><p className=''></p></div></> : description ? <><div className='px-3 py-3.5 bg-bg-tab mt-6 rounded-sm'><p>Description</p><p className='text-sm font-light mt-2'>"Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday"</p></div></> : <p>Not to found</p>}
         </div>
       </div>
     </>
@@ -151,22 +172,22 @@ function ProductDetail() {
         setLoading(false);
       }
     }
-   setTimeout(()=>{
-    fetchData();
-   },400)
+    setTimeout(() => {
+      fetchData();
+    }, 400)
   }, []);
 
   let productDetailContent;
 
   if (loading) {
     productDetailContent = <div className='h-screen w-full animate-pulse overflow-hidden'>
-      <div className='h-1/2 w-full bg-bg-tab'></div>
+      <div className='h-1/2 w-full bg-tertiary'></div>
       <div className='px-4 mt-6'>
-        <div className='bg-bg-tab rounded-[6px] h-10'></div>
-        <div className='bg-bg-tab rounded-full w-1/2 h-8 mt-4'></div>
-        <div className='bg-bg-tab rounded-sm h-10 mt-6'></div>
-        <div className='bg-bg-tab rounded-sm h-10 mt-6'></div>
-        <div className='bg-bg-tab rounded-sm h-10 mt-6'></div>
+        <div className='bg-tertiary rounded-[6px] h-10'></div>
+        <div className='bg-tertiary rounded-full w-1/2 h-8 mt-4'></div>
+        <div className='bg-tertiary rounded-sm h-10 mt-6'></div>
+        <div className='bg-tertiary rounded-sm h-10 mt-6'></div>
+        <div className='bg-tertiary rounded-sm h-10 mt-6'></div>
       </div>
     </div>
   } else if (!loading) {
@@ -175,7 +196,7 @@ function ProductDetail() {
         <img src={data.image} className='object-cover w-full ' />
         <div className='flex justify-between items-center px-6 py-3 absolute top-2 w-full'>
           <div className='w-[34px] h-[34px] rounded-full bg-white/[0.7] inline-flex justify-center items-center' onClick={() => { window.history.back() }}><FiArrowLeft className='text-lg' /></div>
-          <WishList />
+          <WishList id={data.id} />
         </div>
       </div>
 
@@ -188,10 +209,10 @@ function ProductDetail() {
           </div>
         </div>
       </div>
-      <div className='px-4 py-1 mt-1'>
-        <p className='px-2 py-1.5 rounded-full text-center bg-tertiary text-xs font-light text-white inline-flex gap-0.5 items-center'>Best buy {data.rating.count}K <IoIosTrendingUp className='text-white' /></p>
+      <div className='px-4 py-1 '>
+        <p className='text-xs font-normal text-secondary inline-flex items-center gap-1'>Best buy | {data.rating.count}K <IoIosTrendingUp className='text-secondary' /></p>
       </div>
-      <div className='mt-10 px-4'>
+      <div className='mt-10 px-4 flex justify-center items-center'>
         <button className='inline-flex flex-row-reverse gap-2 items-center justify-center max-w-4col rounded-md font-medium bg-accent w-full px-2 py-3 text-base active:bg-accent/75 btn-shadow'><div className='btn-text-shadow'>Add to bag</div><MdOutlineShoppingBag className='text-lg text-black btn-text-shadow' /></button>
       </div>
       <ProductPopup />
@@ -202,7 +223,7 @@ function ProductDetail() {
   return (
     <section className='relative'>
       {productDetailContent}
-      
+
     </section>
   )
 }

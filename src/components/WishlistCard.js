@@ -23,7 +23,6 @@ function AddCarBtn({bagBtn}) {
 function WishlistCard({ ID, data, bagBtn }) {
     console.log('wishlist card');
     console.log(data);
-    const { count, dispatch } = useContext(ProductCountContext);
 
 
     function removedProduct(id) {

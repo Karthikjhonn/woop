@@ -10,14 +10,18 @@ import { ProductCountContext } from '../App';
 
 
 function BottomNavbar() {
-    const { count, dispatch } = useContext(ProductCountContext);
-    const [prdCount,setPrdCount]=useState(count);
-    const[cartUpdateAnimation,setCartUpdateAnimation]=useState(false);
+    const { state, dispatch } = useContext(ProductCountContext);
+    const [prdCount,setPrdCount]=useState(state.count);
     useEffect(()=>{
-        setPrdCount(count);
-        setCartUpdateAnimation(true);
-        setTimeout(()=>setCartUpdateAnimation(false),1000)
-    },[count])
+        setPrdCount(state.count);
+        if (state.updateAnimation) {
+            const timer = setTimeout(() => {
+              dispatch('UPDATE_ANIMATION');
+            }, 800);
+      
+            return () => clearTimeout(timer); // Clear the timer on component unmount or state change
+          }
+    },[state])
     return (
         <div className='fixed bottom-2 left-1/2 -translate-x-1/2 w-full max-w-80 z-[498]'>
             <div className='mx-2 p-2 rounded-full bg-white'>
@@ -35,7 +39,7 @@ function BottomNavbar() {
                         </div>
                     </NavLink>
                     <NavLink to="/cart" className="cartLink">
-                        <div className={`w-[34px] h-[34px] rounded-full flex justify-center items-center relative ${cartUpdateAnimation?'test':''}`}>
+                        <div className={`w-[34px] h-[34px] rounded-full flex justify-center items-center relative ${state.updateAnimation ?'wave':''} `}>
                             <HiOutlineShoppingCart className='text-lg outline-icon' />
                             <HiShoppingCart className='text-lg solid-icon' />
                             <div className="p-1 w-3.5 h-3.5 rounded-full bg-secondary text-white text-[8px] font-medium flex justify-center items-center absolute -top-1.5 left-1/2 -translate-x-1/2">{prdCount}</div>

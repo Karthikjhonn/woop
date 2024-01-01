@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import { ProductCountContext } from '../App';
 
 function ProductCount() {
-  const { count, dispatch } = useContext(ProductCountContext);
+  const { state, dispatch } = useContext(ProductCountContext);
   const [prdCount, setProdCount] = useState(0);
 
   function increment() {

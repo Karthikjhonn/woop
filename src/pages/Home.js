@@ -6,7 +6,7 @@ import { FaLocationDot } from "react-icons/fa6";
 import Card from '../components/Card';
 import BottomNavbar from '../components/BottomNavbar';
 import BlogCard from '../components/BlogCard';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { ProductCountContext } from '../App';
 
 function WelcomeScreen({ visitedUser, userName }) {
@@ -137,12 +137,14 @@ function Recommended() {
   } else if (data != null) {
     items = data.map((listItem, i) => {
       return (
-        <div className='flex flex-col gap-1 items-center ' key={i}>
-          <div className='w-10 h-10 rounded-full bg-slate-200 flex-shrink-0'>
-            <img src={require(`../asset/images/recommendimgs/recomimg${i + 1}.jpg`)} className='w-full h-full object-cover rounded-full' />
+        <NavLink key={i} to='/categories'>
+          <div className='flex flex-col gap-1 items-center ' >
+            <div className='w-10 h-10 rounded-full bg-slate-200 flex-shrink-0'>
+              <img src={require(`../asset/images/recommendimgs/recomimg${i + 1}.jpg`)} className='w-full h-full object-cover rounded-full' />
+            </div>
+            <small className='text-xs capitalize w-full max-w-28 whitespace-nowrap overflow-hidden text-ellipsis text-center'>{listItem}</small>
           </div>
-          <small className='text-xs capitalize w-full max-w-28 whitespace-nowrap overflow-hidden text-ellipsis text-center'>{listItem}</small>
-        </div>
+        </NavLink>
       )
     });
   }
@@ -196,7 +198,8 @@ function TrendingProduct() {
 }
 
 function CenterContent() {
-  const { count, dispatch } = useContext(ProductCountContext);
+  const { state, dispatch } = useContext(ProductCountContext);
+  const navigate = useNavigate();
   const imgSrc = [
     require('../asset/images/brand/Rectangle 55.png'),
     require('../asset/images/brand/Rectangle 56.png'),
@@ -236,9 +239,9 @@ function CenterContent() {
 
         <div className='flex items-center gap-1.5'>
           <div className='flex justify-center items-center'>
-            <button className='w-10 h-10 rounded-full  flex justify-center items-center relative active:bg-halfWhite/75'>
+            <button onClick={() => navigate('/cart')} className='w-10 h-10 rounded-full  flex justify-center items-center relative active:bg-halfWhite/75'>
               <HiShoppingCart className='text-xl m-auto' />
-              <div className='p-1 w-3.5 h-3.5 rounded-full bg-secondary text-white text-[8px] font-medium flex justify-center items-center absolute -top-1 left-1/2 -translate-x-1/2'>{count}</div>
+              <div className='p-1 w-3.5 h-3.5 rounded-full bg-secondary text-white text-[8px] font-medium flex justify-center items-center absolute -top-1 left-1/2 -translate-x-1/2'>{state.count}</div>
             </button>
           </div>
           <div className='flex justify-center items-center'>
@@ -305,16 +308,46 @@ function CenterContent() {
         <div className='border bg-gradient-to-r from-violet-200 via-accent/75 to-pink-200 border-secondary w-full max-w-xs mx-auto pt-2 rounded-sm'>
           <div className='bg-white p-2.5 rounded-sm rounded-tr-none rounded-tl-none'>
             <h1 className='capitalize font-medium text-lg text-black text-center pt-2'>membership</h1>
-            <p className='py-4 text-xs font-extralight text-center'>Enjoy exclusive benefits and discounts when you join.</p>
+            <p className='py-4 text-xs font-light text-center'>Enjoy exclusive benefits and discounts when you join.</p>
             <div className='flex justify-center'>
-              <button className='font-normal px-6 py-2 bg-secondary text-white rounded-full text-sm text-center mx-auto active:bg-secondary/75'>Add</button>
+              <NavLink to='/membership'>
+                <button className='font-normal px-6 py-2 bg-secondary text-white rounded-full text-sm text-center mx-auto active:bg-secondary/75'>Add</button>
+              </NavLink>
             </div>
           </div>
         </div>
       </div>
       {/* blog section  */}
       <section className='mt-6 px-4'>
-        <BlogCard />
+        {/* <BlogCard /> */}
+        <div className='py-2 flex gap-2 overflow-x-auto'>
+
+          <div className='min-w-40 h-72 rounded-sm relative'>
+            <img src='https://cdn.pixabay.com/photo/2017/07/20/10/02/portrait-2521800_1280.jpg' className='w-full h-full rounded-sm object-cover object-center' />
+            <div className='absolute bottom-2 left-2 rounded-xs bg-white px-3 py-1.5 text-secondary text-xs font-normal font-merienda'>
+              kid's
+            </div>
+          </div>
+          <div className='min-w-40 h-72 rounded-sm relative'>
+            <img src='https://cdn.pixabay.com/photo/2018/10/10/14/24/shirt-3737405_1280.jpg' className='w-full h-full rounded-sm object-cover object-center' />
+            <div className='absolute bottom-2 left-2 rounded-xs bg-white px-3 py-1.5 text-secondary text-xs font-normal font-merienda'>
+              men's
+            </div>
+          </div>
+          <div className='min-w-40 h-72 rounded-sm relative'>
+            <img src='https://cdn.pixabay.com/photo/2019/11/21/15/00/woman-4642701_1280.jpg' className='w-full h-full rounded-sm object-cover object-center' />
+            <div className='absolute bottom-2 left-2 rounded-xs bg-white px-3 py-1.5 text-secondary text-sm font-normal font-merienda'>
+              women's
+            </div>
+          </div>
+          <div className='min-w-40 h-72 rounded-sm relative'>
+            <img src='https://cdn.pixabay.com/photo/2019/09/09/14/55/fashion-4463802_1280.jpg' className='w-full h-full rounded-sm object-cover object-center' />
+            <div className='absolute bottom-2 left-2 rounded-xs bg-white px-3 py-1.5 text-secondary text-sm font-normal font-merienda'>
+              trends's
+            </div>
+          </div>
+
+        </div>
       </section>
       <div className='py-8'></div>
       <BottomNavbar />
@@ -323,11 +356,31 @@ function CenterContent() {
 }
 
 function Home() {
+  const [showGreeting, setShowGreeting] = useState(true);
+  useEffect(() => {
+    // Check if the greeting has been shown before
+    const hasShownGreeting = localStorage.getItem('hasShownGreeting');
+
+    if (!hasShownGreeting) {
+      // If not shown before, display the greeting
+      setShowGreeting(true);
+
+      // Set a flag in local storage to indicate that the greeting has been shown
+      localStorage.setItem('hasShownGreeting', true);
+
+      // Hide the greeting after 3 seconds
+      setTimeout(() => {
+        setShowGreeting(false);
+      }, 3000);
+    } else {
+      // If the greeting has been shown before, hide it
+      setShowGreeting(false);
+    }
+  }, []);
 
   return (
     <>
-    {/* <WelcomeScreen/> */}
-      <CenterContent />
+      {showGreeting ? <WelcomeScreen /> : <CenterContent />}
     </>
   )
 }

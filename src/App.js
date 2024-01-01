@@ -7,6 +7,7 @@ import Wishlist from './pages/Wishlist';
 import Cart from './pages/Cart';
 import { createContext, useReducer, useState } from 'react';
 import Profile from './pages/Profile';
+import Membership from './pages/Membership';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<RootLayout />}>
@@ -16,30 +17,47 @@ const router = createBrowserRouter(
       <Route path='cart' element={<Cart />} />
       <Route path='wishlist' element={<Wishlist />} />
       <Route path='profile' element={<Profile />} />
+      <Route path='membership' element={<Membership />} />
     </Route>
   )
 )
 export const ProductCountContext = createContext();
-const initialState = 0;
+const initialState = {
+  count: 0,
+  updateAnimation: false
+}
 const reducer = (state, action) => {
   console.log("state", state);
   switch (action) {
     case 'INCREMENT':
-      return state + 1;
+      return {
+        ...state,
+        count: state.count + 1,
+        updateAnimation: true,
+      };
     case 'DECREMENT':
-      return state - 1;
+      return {
+        ...state,
+        count: state.count - 1,
+        updateAnimation: true,
+      };
+      case 'UPDATE_ANIMATION':
+        return{
+          ...state,
+          updateAnimation:false
+        }
     default:
       return state;
   }
 }
 
 function App() {
-  const [count, dispatch] = useReducer(reducer, initialState);
-  
-  return (
+  const [state, dispatch] = useReducer(reducer, initialState);
+  console.log(state.count);
 
+  return (
     <div className='font-poppins container mx-auto max-w-screen-lg'>
-      <ProductCountContext.Provider value={{ count, dispatch }}>
+      <ProductCountContext.Provider value={{ state, dispatch }}>
         <RouterProvider router={router} />
       </ProductCountContext.Provider>
     </div>
