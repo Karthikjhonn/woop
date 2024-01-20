@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { FiArrowLeft } from "react-icons/fi";
 import { FaRegHeart } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa";
@@ -8,24 +8,26 @@ import { MdOutlineShoppingBag } from "react-icons/md";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { FiX } from "react-icons/fi";
 import { useParams } from 'react-router-dom';
+import { ProductCountContext } from '../App';
 
-function WishList({id}) {
+
+function WishList({ id }) {
   const [wishState, setWishState] = useState(false);
   const likedProduct = JSON.parse(localStorage.getItem('likedProduct'));
   useEffect(() => {
     if (localStorage.getItem('likedProduct') == null) {
-        localStorage.setItem('likedProduct', '[]');
-        console.log("array created");
+      localStorage.setItem('likedProduct', '[]');
+      console.log("array created");
     }
     if (likedProduct != null) {
-        likedProduct.map((ID) => {
-            if (ID == id) {
-                // wishlistAdd();
-                setWishState(true)
-            }
-        })
+      likedProduct.map((ID) => {
+        if (ID == id) {
+          setWishState(true)
+        }
+      })
     }
-}, [])
+  }, []);
+
   function wishlistAdd(id) {
     if (wishState) {
       const allLikedProduct = JSON.parse(localStorage.getItem('likedProduct'));
@@ -39,8 +41,9 @@ function WishList({id}) {
       setWishState(true);
     }
   }
+
   return (
-    <div onClick={wishlistAdd} className='active:bg-accent/25 active:scale-110 transition-transform duration-150 ease-in-out w-[34px] h-[34px] rounded-full bg-white/[0.7] inline-flex justify-center items-center'>{wishState ? <FaHeart className='text-lg text-secondaryAccent' /> : <FaRegHeart className='text-lg text-secondaryAccent' />}</div>
+    <div onClick={()=>wishlistAdd(id)} className='active:bg-accent/25 active:scale-110 transition-transform duration-150 ease-in-out w-[34px] h-[34px] rounded-full bg-white/[0.7] inline-flex justify-center items-center'>{wishState ? <FaHeart className='text-lg text-secondaryAccent' /> : <FaRegHeart className='text-lg text-secondaryAccent' />}</div>
   )
 }
 
@@ -108,7 +111,7 @@ function ProductPopup() {
       <div onClick={handelPopupClose} className={`bg-black/25 w-full h-dvh fixed top-0 left-0 ${colorAndSize ? 'block' : information ? 'block' : description ? 'block' : 'hidden'}`}>
         <div className='bg-white w-full pb-10 pt-1 px-4 bottom-0 absolute max-h-[75vh] overflow-y-scroll'>
           <div className='bg-black w-16 h-1 rounded-full mx-auto'></div>
-          <div className='mt-4 sticky top-0'>
+          <div className='mt-4 sticky top-0 bg-white'>
             <div onClick={handelPopupClose} className='my-1 rounded-full active:bg-halfWhite w-[34px] h-[34px] flex justify-center items-center'><FiX className='text-lg m-auto' /></div>
             <h1 className='text-xl font-medium text-[#212121] mt-4 capitalize'>{colorAndSize ? 'color & size' : information ? 'Product information' : description ? 'Product description' : <></>}</h1>
           </div>
@@ -145,16 +148,41 @@ function ProductPopup() {
 }
 
 function ProductDetail() {
-  window.scroll({
-    top: 0
-  })
-  const productId = useParams();
-  console.log(productId.id);
 
+  const productId = useParams();
+  const { state, dispatch } = useContext(ProductCountContext);
+  const [addToBag, setAddToBag] = useState(false);
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  function addtobag(id) {
+    if (!addToBag) {
+      setAddToBag(true);
+    }
+    const otherLikedProduct = JSON.parse(localStorage.getItem('cartItems'));
+    if (otherLikedProduct.length == 0) {
+      otherLikedProduct.push(id)
+      localStorage.setItem('cartItems', JSON.stringify(otherLikedProduct));
+      dispatch('INCREMENT');
+    } else {
+      const otherLikedProduct = JSON.parse(localStorage.getItem('cartItems'));
+      if (!otherLikedProduct.includes(id)) {
+        console.log("if true");
+        otherLikedProduct.push(id);
+        localStorage.setItem('cartItems', JSON.stringify(otherLikedProduct));
+        dispatch('INCREMENT');
+      }
+    }
+  }
+
   useEffect(() => {
+    window.scroll({
+      top: 0
+    })
+    if(localStorage.getItem("cartItems") == null){
+      localStorage.setItem("cartItems","[]");
+    }
     const URL = `https://fakestoreapi.com/products/${productId.id}`;
     const fetchData = async () => {
       try {
@@ -210,10 +238,10 @@ function ProductDetail() {
         </div>
       </div>
       <div className='px-4 py-1 '>
-        <p className='text-xs font-normal text-secondary inline-flex items-center gap-1'>Best buy | {data.rating.count}K <IoIosTrendingUp className='text-secondary' /></p>
+        <p className='text-xs font-normal text-tertiary inline-flex items-center gap-1'>Best buy | {data.rating.count}K <IoIosTrendingUp className='text-tertiary' /></p>
       </div>
       <div className='mt-10 px-4 flex justify-center items-center'>
-        <button className='inline-flex flex-row-reverse gap-2 items-center justify-center max-w-4col rounded-md font-medium bg-accent w-full px-2 py-3 text-base active:bg-accent/75 btn-shadow'><div className='btn-text-shadow'>Add to bag</div><MdOutlineShoppingBag className='text-lg text-black btn-text-shadow' /></button>
+        <button className='inline-flex flex-row-reverse gap-2 items-center justify-center max-w-4col rounded-md font-medium bg-accent w-full px-2 py-3 text-base active:bg-accent/75 btn-shadow' onClick={() => addtobag(data.id)}><div className='btn-text-shadow'>{addToBag ? 'Added to bag' : 'Add to bag'}</div><MdOutlineShoppingBag className='text-lg text-black btn-text-shadow' /></button>
       </div>
       <ProductPopup />
       <div className='py-1'></div>

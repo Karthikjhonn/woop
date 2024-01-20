@@ -8,6 +8,7 @@ import Cart from './pages/Cart';
 import { createContext, useReducer, useState } from 'react';
 import Profile from './pages/Profile';
 import Membership from './pages/Membership';
+import PageNotFound from './pages/PageNotFound';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<RootLayout />}>
@@ -18,6 +19,7 @@ const router = createBrowserRouter(
       <Route path='wishlist' element={<Wishlist />} />
       <Route path='profile' element={<Profile />} />
       <Route path='membership' element={<Membership />} />
+      <Route path='*' element={<PageNotFound />} />
     </Route>
   )
 )
@@ -27,7 +29,7 @@ const initialState = {
   updateAnimation: false
 }
 const reducer = (state, action) => {
-  console.log("state", state);
+  // console.log("state", state);
   switch (action) {
     case 'INCREMENT':
       return {
@@ -53,7 +55,10 @@ const reducer = (state, action) => {
 
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
-  console.log(state.count);
+  // console.log(state.count);
+  if(localStorage.getItem("cartItems") == null){
+    localStorage.setItem("cartItems","[]");
+  }
 
   return (
     <div className='font-poppins container mx-auto max-w-screen-lg'>

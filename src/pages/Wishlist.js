@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 function Wishlist() {
     window.scroll({
-        top:0,
+        top: 0,
     })
     const navigate = useNavigate();
     let wishlistProduct;
@@ -16,6 +16,15 @@ function Wishlist() {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [parentState, setParentState] = useState(true);
+
+    const handleChildRerender = () => {
+        if (parentState) {
+            setParentState(false);
+        } else if (!parentState) {
+            setParentState(true);
+        }
+    };
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -32,20 +41,21 @@ function Wishlist() {
                 setLoading(false);
             }
         }
-        setTimeout(()=> fetchData(),2000)
+        setTimeout(() => fetchData(), 2000)
     }, []);
 
     if (likedProduct == null || likedProduct == "") {
         wishlistProduct = <div className='w-full min-h-64 flex flex-col justify-center items-center'>
-            <img src={require('../asset/images/icons/surprised.png')} className='object-contain' />
-            <p className='text-xs text-secondary font-light text-center  mt-6'>Seems your wishlist items is empty <br /> Explore all product <span onClick={() => navigate('/categories')} className='underline active:text-blue-500'>here</span></p>
+            <img src={require('../asset/images/icons/wishlistcard.png')} className='object-contain' />
+            <p className='text-base text-tertiary font-normal text-center  mt-6'>Seems Your wishlist is currently empty.
+                Add items to your wishlist to save them for later!</p>
         </div>
     } else {
         if (loading) {
             wishlistProduct = <><div className='w-full h-28 rounded-sm bg-bg-tab animate-pulse'></div><div className='w-full h-28 rounded-sm bg-bg-tab animate-pulse'></div><div className='w-full h-28 rounded-sm bg-bg-tab animate-pulse'></div><div className='w-full h-28 rounded-sm bg-bg-tab animate-pulse'></div></>
         } else if (!loading) {
             wishlistProduct = likedProduct.map((id, i) => {
-                return <WishlistCard key={i} ID={id} data={data[id-1]} bagBtn={true} />
+                return <WishlistCard key={i} ID={id} data={data[id - 1]} bagBtn={true} page={'wishlistPage'} onRerender={handleChildRerender} />
             })
         }
 

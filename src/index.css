@@ -23,7 +23,21 @@ body {
         /* Firefox */
     }
 }
-
+.slick-dots {
+    bottom: 10px !important;
+}
+.banner2 .slick-list{
+    padding-top: 18px !important;
+    padding-bottom: 18px !important;
+}
+.banner2 .slick-initialized .slick-slide{
+    /* margin: 0 14px; */
+    padding-right: 8px;
+}
+.banner2 .slick-center.slick-current{
+    transform: translateY(-14px);
+    transition: all .2s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
 .btn {
     @apply px-4 py-2 border bg-tertiary mb-4 mx-2
 }

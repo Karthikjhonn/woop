@@ -10,21 +10,42 @@ import { ProductCountContext } from '../App';
 
 
 function BottomNavbar() {
+    // console.log("nav bar");
+    const [prevScrollPos, setPrevScrollPos] = useState(window.scrollY);
+    const [navWidth,setNavWidth]=useState(true);
+
+    const handleScroll = () => {
+        const currentScrollPos = window.scrollY;
+
+        if (prevScrollPos > currentScrollPos) {
+            // console.log('Scrolling up');
+            setNavWidth(true);
+        } else {
+            setNavWidth(false);
+            // console.log('Scrolling down');
+        }
+
+        setPrevScrollPos(currentScrollPos);
+    };
+
+
     const { state, dispatch } = useContext(ProductCountContext);
-    const [prdCount,setPrdCount]=useState(state.count);
-    useEffect(()=>{
+    const [prdCount, setPrdCount] = useState(state.count);
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll);
         setPrdCount(state.count);
         if (state.updateAnimation) {
             const timer = setTimeout(() => {
-              dispatch('UPDATE_ANIMATION');
-            }, 800);
-      
-            return () => clearTimeout(timer); // Clear the timer on component unmount or state change
-          }
-    },[state])
+                dispatch('UPDATE_ANIMATION');
+            }, 1000);
+
+            return () => {clearTimeout(timer);window.removeEventListener('scroll', handleScroll);} // Clear the timer on component unmount or state change
+        }
+  
+    }, [state])
     return (
-        <div className='fixed bottom-2 left-1/2 -translate-x-1/2 w-full max-w-80 z-[498]'>
-            <div className='mx-2 p-2 rounded-full bg-white'>
+        <div className={`fixed  left-1/2 -translate-x-1/2 w-full max-w-80 z-[498] bottom-2 transition-all duration-200 ease-in-out`}>
+            <div className={`mx-2 p-2 rounded-full bg-white   overflow-hidden `}>
                 <div className='flex items-center justify-between Nav-link'>
                     <NavLink to="/" className="homeLink">
                         <div className='w-[34px] h-[34px] rounded-full flex justify-center items-center relative'>
@@ -39,7 +60,7 @@ function BottomNavbar() {
                         </div>
                     </NavLink>
                     <NavLink to="/cart" className="cartLink">
-                        <div className={`w-[34px] h-[34px] rounded-full flex justify-center items-center relative ${state.updateAnimation ?'wave':''} `}>
+                        <div className={`w-[34px] h-[34px] rounded-full flex justify-center items-center relative ${state.updateAnimation ? 'wave' : ''} `}>
                             <HiOutlineShoppingCart className='text-lg outline-icon' />
                             <HiShoppingCart className='text-lg solid-icon' />
                             <div className="p-1 w-3.5 h-3.5 rounded-full bg-secondary text-white text-[8px] font-medium flex justify-center items-center absolute -top-1.5 left-1/2 -translate-x-1/2">{prdCount}</div>

@@ -8,6 +8,9 @@ import BottomNavbar from '../components/BottomNavbar';
 import BlogCard from '../components/BlogCard';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { ProductCountContext } from '../App';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 function WelcomeScreen({ visitedUser, userName }) {
   return (
@@ -98,9 +101,9 @@ function LocationToggle() {
     <>
       <div onClick={handelToggle} className={`pointer-events-auto h-6 w-10 rounded-full p-1 ring-1 ring-inset transition duration-200 ease-in-out  ring-secondaryAccent/5 ${toggle ? 'bg-accent' : 'bg-zinc-200'}`}><div className={`h-4 w-4 rounded-full bg-white shadow-sm ring-1 ring-slate-700/10 transition duration-200 ease-in-out ${toggle ? 'translate-x-4' : 'translate-x-0'}`}></div></div>
       {toggle ? <></> : <div className='fixed top-0 left-0 w-full h-svh bg-black/25 z-[500] flex justify-center items-center p-4'>
-        <div className='max-w-sm mx-auto w-full bg-white p-3 py-8 rounded-sm text-sm text-center text-secondary'>
+        <div className='max-w-sm mx-auto w-full bg-white p-3 py-12 rounded-sm text-sm text-center text-secondary'>
           please make sure, your location is <br /> enable.
-          <div><button className='mt-2.5 px-4 py-1 bg-secondary text-white rounded-full' onClick={handelToggle}>ok</button></div>
+          <div className='mt-4'><button className='mt-2.5 px-4 py-1 bg-secondary text-white rounded-full' onClick={handelToggle}>ok</button></div>
         </div>
       </div>}
     </>
@@ -197,8 +200,92 @@ function TrendingProduct() {
   )
 }
 
+function BannerSlider() {
+  var settings = {
+    dots: true,
+    infinite: true,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 4000,
+    pauseOnHover: true,
+    arrows: false,
+  };
+  return (
+    <Slider {...settings}>
+      <div>
+        <img src={require('../asset/images/4eb2ab40d43c00f4663d8712fd446594.jpg')} className='object-contain md:object-cover w-full h-full' />
+      </div>
+      <div>
+        <img src={require('../asset/images/banner/banner2.png')} className='object-contain md:object-cover w-full h-full' />
+      </div>
+      <div>
+        <img src={require('../asset/images/banner/banner3.png')} className='object-contain md:object-cover w-full h-full' />
+      </div>
+      <div>
+        <img src={require('../asset/images/banner/banner4.png')} className='object-contain md:object-cover w-full h-full' />
+      </div>
+      <div>
+        <img src={require('../asset/images/banner/banner1.png')} className='object-contain md:object-cover w-full h-full' />
+      </div>
+      <div>
+        <img src={require('../asset/images/banner/banner5.png')} className='object-contain md:object-cover w-full h-full' />
+      </div>
+    </Slider>
+  )
+}
+
+function BannerSlide2() {
+  const settings = {
+    className: "center",
+    centerMode: true,
+    infinite: true,
+    centerPadding: "70px",
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    speed: 500,
+    autoplay: true,
+    arrows: false,
+
+  };
+  return (
+    <>
+      <h1 className='uppercase text-secondary text-[2.50rem] text-center px-4'>carry your dream’s  even higher</h1>
+      <div className='mt-10 px-4'>
+        <button className='capitalize font-light text-white bg-black text-xl rounded-full px-4 py-3 w-full'>shop now</button>
+      </div>
+      <div className='mt-10 banner2'>
+        <Slider {...settings}>
+          <div className=''>
+            <img src={require('../asset/images/banner/bslide1.png')} className='object-contain ' />
+          </div>
+          <div className=''>
+            <img src={require('../asset/images/banner/bslide2.png')} className='object-contain ' />
+          </div>
+          <div className=''>
+            <img src={require('../asset/images/banner/bslide3.png')} className='object-contain ' />
+          </div>
+        </Slider>
+      </div>
+    </>
+  )
+}
+
+function SmallTabsImages() {
+  return (
+    <>
+      <div className='relative'>
+        <img src={require('../asset/images/banner/small banners.png')} className='object-contain rounded-sm max-h-[150px] max-w-[100px] w-full h-full' />
+        <p className='absolute bottom-3.5 capitalize left-1/2 -translate-x-1/2 whitespace-nowrap font-medium text-white text-center'>top trends</p>
+      </div>
+    </>
+  )
+}
+
 function CenterContent() {
   const { state, dispatch } = useContext(ProductCountContext);
+
+
   const navigate = useNavigate();
   const imgSrc = [
     require('../asset/images/brand/Rectangle 55.png'),
@@ -265,25 +352,21 @@ function CenterContent() {
         <input type='text' placeholder='search here..' className='border border-secondary rounded-full px-5 py-2 w-full  placeholder:text-sm placeholder:font-extralight focus-within:outline-none' />
       </div>
       {/* banners  */}
-      <div className='mt-6 px-4'>
-        <div className=' w-full bg-slate-200 rounded-xl'>
-          <img src={require("../asset/images/4eb2ab40d43c00f4663d8712fd446594.jpg")} className='object-cover w-full rounded-xl' />
-        </div>
+      <div className='mt-11'>
+        <BannerSlider />
       </div>
-
+      {/* trendsetter */}
       <div className='mt-6 px-4 flex justify-between items-center capitalize'>
         <p className='font-medium text-sm text-secondary'>trendsetter</p>
         <NavLink to="/categories"><button className='text-white bg-accent text-[8px] font-medium rounded-xs px-2 py-1 mr-6 btn-shadow'>view all</button></NavLink>
       </div>
-
       {/* products  */}
       <div className='mt-3.5 px-4'>
         <div className='grid grid-cols-2 gap-3 place-items-center md:grid-cols-3'>
           <TrendingProduct />
         </div>
       </div>
-
-      <div className='h-[100dvh] mt-6 py-2 relative'>
+      <div className='h-screen mt-6  relative'>
         <img src={require("../asset/images/productsimage/h&m.png")} className='w-full h-full object-cover md:object-top' />
         {/* <p className="absolute top-2 left-2 text-red-600 text-[38px] font-markScript">H&M</p> */}
         <div className='absolute top-6 left-2'>
@@ -292,26 +375,29 @@ function CenterContent() {
           </svg>
         </div>
       </div>
+      <div className='mt-6 overflow-hidden'>
+        <BannerSlide2 />
+      </div>
       {/* brandImages */}
       <div className='bg-white py-6 px-4'>
-        <div className=' grid grid-cols-6 place-items-center place-self-center gap-2 max-w-sm mx-auto'>
+        <div className=' grid grid-cols-6 place-items-center place-self-center gap-x-2 gap-y-7 max-w-sm mx-auto'>
           {brandImg}
         </div>
       </div>
       {/* recommended */}
-      <div className='mt-6 px-4'>
-        <h1 className='capitalize font-medium text-sm text-secondary mb-2'>recommended for you</h1>
+      <div className='mt-6'>
+        <h1 className='capitalize font-medium text-sm text-secondary mb-2 px-4'>recommended for you</h1>
         <Recommended />
       </div>
       {/* membership */}
       <div className='mt-6 px-4'>
-        <div className='border bg-gradient-to-r from-violet-200 via-accent/75 to-pink-200 border-secondary w-full max-w-xs mx-auto pt-2 rounded-sm'>
-          <div className='bg-white p-2.5 rounded-sm rounded-tr-none rounded-tl-none'>
-            <h1 className='capitalize font-medium text-lg text-black text-center pt-2'>membership</h1>
-            <p className='py-4 text-xs font-light text-center'>Enjoy exclusive benefits and discounts when you join.</p>
+        <div className='border bg-gradient-to-r from-violet-200 via-accent/75 to-pink-200 border-secondary w-full max-w-[304px] mx-auto pt-1.5 rounded-sm '>
+          <div className='bg-white p-2.5 py-4 rounded-sm rounded-tr-none rounded-tl-none flex flex-col gap-4'>
+            <h1 className='capitalize font-medium text-lg text-black text-center '>membership</h1>
+            <p className=' text-xs font-light text-center px-5'>Enjoy exclusive benefits and discounts when you join.</p>
             <div className='flex justify-center'>
               <NavLink to='/membership'>
-                <button className='font-normal px-6 py-2 bg-secondary text-white rounded-full text-sm text-center mx-auto active:bg-secondary/75'>Add</button>
+                <button className='font-normal px-7 py-2 bg-secondary text-white rounded-full text-base text-center mx-auto active:bg-secondary/75'>Add</button>
               </NavLink>
             </div>
           </div>
@@ -319,7 +405,6 @@ function CenterContent() {
       </div>
       {/* blog section  */}
       <section className='mt-6 px-4'>
-        {/* <BlogCard /> */}
         <div className='py-2 flex gap-2 overflow-x-auto'>
 
           <div className='min-w-40 h-72 rounded-sm relative'>
@@ -347,6 +432,41 @@ function CenterContent() {
             </div>
           </div>
 
+        </div>
+        {/* <BlogCard /> */}
+      </section>
+      <section className='mt-10'>
+        <div className='grid grid-cols-[repeat(6,minmax(100px,100px))] gap-4 overflow-x-auto px-4 py-2 md:justify-center'>
+          <SmallTabsImages/>
+          <SmallTabsImages/>
+          <SmallTabsImages/>
+          <SmallTabsImages/>
+          <SmallTabsImages/>
+          <SmallTabsImages/>
+          <SmallTabsImages/>
+          <SmallTabsImages/>
+          <SmallTabsImages/>
+          <SmallTabsImages/>
+          <SmallTabsImages/>
+          <SmallTabsImages/>
+          <SmallTabsImages/>
+          <SmallTabsImages/>
+          <SmallTabsImages/>
+          <SmallTabsImages/>
+          <SmallTabsImages/>
+          <SmallTabsImages/>
+          <SmallTabsImages/>
+          <SmallTabsImages/>
+          <SmallTabsImages/>
+          <SmallTabsImages/>
+          <SmallTabsImages/>
+          <SmallTabsImages/>
+          <SmallTabsImages/>
+          <SmallTabsImages/>
+          <SmallTabsImages/>
+          <SmallTabsImages/>
+          <SmallTabsImages/>
+          <SmallTabsImages/>
         </div>
       </section>
       <div className='py-8'></div>
