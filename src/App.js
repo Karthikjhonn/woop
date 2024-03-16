@@ -61,7 +61,7 @@ function App() {
   }
 
   return (
-    <div className='font-poppins container mx-auto max-w-screen-lg'>
+    <div className='font-poppins container mx-auto max-w-md'>
       <ProductCountContext.Provider value={{ state, dispatch }}>
         <RouterProvider router={router} />
       </ProductCountContext.Provider>

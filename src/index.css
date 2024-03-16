@@ -6,6 +6,20 @@
 
 body {
     background-color: #F8F8F8;
+    touch-action: manipulation;
+    /* Improve mobile responsiveness */
+    -webkit-text-size-adjust: none;
+    /* Prevent text resizing */
+    -ms-text-size-adjust: none;
+    user-select: none;
+    /* Disable text selection */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    /* Remove tap highlight */
+    -webkit-touch-callout: none;
+    /* Disable long tap options */
 }
 
 @layer utilities {
@@ -23,21 +37,26 @@ body {
         /* Firefox */
     }
 }
+
 .slick-dots {
     bottom: 10px !important;
 }
-.banner2 .slick-list{
+
+.banner2 .slick-list {
     padding-top: 18px !important;
     padding-bottom: 18px !important;
 }
-.banner2 .slick-initialized .slick-slide{
+
+.banner2 .slick-initialized .slick-slide {
     /* margin: 0 14px; */
     padding-right: 8px;
 }
-.banner2 .slick-center.slick-current{
+
+.banner2 .slick-center.slick-current {
     transform: translateY(-14px);
     transition: all .2s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
+
 .btn {
     @apply px-4 py-2 border bg-tertiary mb-4 mx-2
 }
@@ -127,7 +146,8 @@ body {
     background-color: #000;
 }
 
-.wave::before ,.wave::after{
+.wave::before,
+.wave::after {
     content: '';
     width: 70%;
     height: 70%;
@@ -137,48 +157,100 @@ body {
     animation: cartUpdate .6s 2 cubic-bezier(0, 0.73, 0.57, 1);
     opacity: 0;
 }
-.wave::after{
+
+.wave::after {
     border: 1px solid #DB3B47;
     animation-delay: .2s;
 }
-.blast::after,.blast::before{
+
+.blast::after,
+.blast::before {
     content: '';
     position: absolute;
     width: 8px;
     height: 8px;
     background-color: red;
     border-radius: 50%;
-    animation: blast .6s infinite  cubic-bezier(0, 0.73, 0.57, 1);
+    animation: blast .6s infinite cubic-bezier(0, 0.73, 0.57, 1);
     opacity: 0;
     right: 0;
 }
-.blast::before{
+
+.blast::before {
     background: olive;
     animation-delay: .4s;
     left: 0;
-    
+
 }
-.blast1::before{
+
+.blast1::before {
     background-color: #DB3B47;
     top: 4px;
 }
-.blast1::after{
+
+.blast1::after {
     background-color: black;
     top: 4px;
 }
+
 @keyframes cartUpdate {
-    0%{width: 0;height: 0;opacity: 0;}
-    25%{width:25%;height:25%;opacity: .5; background-color: #FF595D;}
-    50%{width:50%;height:50%;opacity: .8; background-color: #FF595D;}
-    75%{width:75%;height:75%;opacity: 1;}
-    100%{width:100%;height:100%;opacity: 1;}
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 0;
+    }
+
+    25% {
+        width: 25%;
+        height: 25%;
+        opacity: .5;
+        background-color: #FF595D;
+    }
+
+    50% {
+        width: 50%;
+        height: 50%;
+        opacity: .8;
+        background-color: #FF595D;
+    }
+
+    75% {
+        width: 75%;
+        height: 75%;
+        opacity: 1;
+    }
+
+    100% {
+        width: 100%;
+        height: 100%;
+        opacity: 1;
+    }
 }
 
 @keyframes blast {
-    0%{scale: 0; opacity: 0;}
-    25%{scale: 1; opacity: .5;}
-    50%{scale: 1.1; opacity: .8;}
-    75% {scale: 1.2;opacity: 1;}
-    100%{scale: 1.5; opacity: 1;}
-    
+    0% {
+        scale: 0;
+        opacity: 0;
+    }
+
+    25% {
+        scale: 1;
+        opacity: .5;
+    }
+
+    50% {
+        scale: 1.1;
+        opacity: .8;
+    }
+
+    75% {
+        scale: 1.2;
+        opacity: 1;
+    }
+
+    100% {
+        scale: 1.5;
+        opacity: 1;
+    }
+
 }

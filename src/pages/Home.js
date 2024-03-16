@@ -44,32 +44,34 @@ function StatusView() {
     }
   }
 
+  const test = [{
+    imgSrc: "https://img.freepik.com/free-photo/fashion-stylish-model-dressed-elegant-light-pink-suit-posing-near-white-wall_158538-13394.jpg?t=st=1710607353~exp=1710610953~hmac=1c3e9972a7a3680d08fb45246ddfa674a0175baac3b66a33f4981302cc476177&w=360"
+  },
+  {
+    imgSrc: "https://img.freepik.com/free-photo/pretty-young-stylish-sexy-woman-pink-luxury-dress-summer-fashion-trend-chic-style-sunglasses-blue-studio-background-shopping-holding-paper-bags-talking-mobile-phone-shopaholic_285396-2957.jpg?t=st=1710608233~exp=1710611833~hmac=411fabc325462bd7d7033c37221a0684712023102b86ba2c9e85311a4948afc0&w=1060"
+  },
+  {
+    imgSrc: "https://img.freepik.com/free-photo/portrait-smiling-beautiful-girl-her-handsome-boyfriend-laughing-happy-cheerful-couple-sunglasses_158538-5002.jpg?t=st=1710608040~exp=1710611640~hmac=394a5b1d06961d1e59f570bc1051e6de8f9e53aecbd585ee48768b8b4d15ed88&w=900"
+  },
+  {
+    imgSrc: "https://img.freepik.com/free-photo/pretty-young-stylish-sexy-woman-pink-luxury-dress-summer-fashion-trend-chic-style-sunglasses-blue-studio-background-shopping-holding-paper-bags-talking-mobile-phone-shopaholic_285396-2957.jpg?t=st=1710608233~exp=1710611833~hmac=411fabc325462bd7d7033c37221a0684712023102b86ba2c9e85311a4948afc0&w=1060"
+  }
+  ];
+  const ImageBlock = test.map((data) => {
+    return (
+      <div onClick={openStatus} className='flex flex-col gap-0.5 items-center'>
+        <div className='w-10 h-10 rounded-full '>
+          <img src={data.imgSrc} className='object-contain aspect-square min-w-10 max-w-10 w-full h-10 rounded-full' />
+        </div>
+        <small className='capitalize text-center text-[6px]'>top trends</small>
+      </div>
+    )
+  })
   return (
     <>
-      <div onClick={openStatus} className='flex flex-col gap-0.5 items-center'>
-        <div className='w-10 h-10 rounded-full '>
-          <img src={require("../asset/images/s-img1.png")} className='object-contain min-w-10 max-w-10 w-full' />
-        </div>
-        <small className='capitalize text-center text-[6px]'>top trends</small>
-      </div>
-      <div onClick={openStatus} className='flex flex-col gap-0.5 items-center'>
-        <div className='w-10 h-10 rounded-full '>
-          <img src={require("../asset/images/s-img2.png")} className='object-contain min-w-10 max-w-10 w-full' />
-        </div>
-        <small className='capitalize text-center text-[6px]'>top trends</small>
-      </div>
-      <div onClick={openStatus} className='flex flex-col gap-0.5 items-center'>
-        <div className='w-10 h-10 rounded-full '>
-          <img src={require("../asset/images/s-img1.png")} className='object-contain min-w-10 max-w-10 w-full' />
-        </div>
-        <small className='capitalize text-center text-[6px]'>top trends</small>
-      </div>
-      <div onClick={openStatus} className='flex flex-col gap-0.5 items-center'>
-        <div className='w-10 h-10 rounded-full '>
-          <img src={require("../asset/images/s-img2.png")} className='object-contain min-w-10 max-w-10 w-full' />
-        </div>
-        <small className='capitalize text-center text-[6px]'>top trends</small>
-      </div>
+      <>
+        {ImageBlock}</>
+
       {statusView ? <div className='fixed top-0 left-0 w-full h-svh bg-black text-white z-30 overflow-hidden'>
         <img src='https://cdn.pixabay.com/photo/2015/04/10/17/09/woman-716592_640.jpg' className='w-full h-full object-cover' />
         <div className='px-[14px] absolute bottom-8 space-y-2'>
@@ -437,36 +439,36 @@ function CenterContent() {
       </section>
       <section className='mt-10'>
         <div className='grid grid-cols-[repeat(6,minmax(100px,100px))] gap-4 overflow-x-auto px-4 py-2 md:justify-center'>
-          <SmallTabsImages/>
-          <SmallTabsImages/>
-          <SmallTabsImages/>
-          <SmallTabsImages/>
-          <SmallTabsImages/>
-          <SmallTabsImages/>
-          <SmallTabsImages/>
-          <SmallTabsImages/>
-          <SmallTabsImages/>
-          <SmallTabsImages/>
-          <SmallTabsImages/>
-          <SmallTabsImages/>
-          <SmallTabsImages/>
-          <SmallTabsImages/>
-          <SmallTabsImages/>
-          <SmallTabsImages/>
-          <SmallTabsImages/>
-          <SmallTabsImages/>
-          <SmallTabsImages/>
-          <SmallTabsImages/>
-          <SmallTabsImages/>
-          <SmallTabsImages/>
-          <SmallTabsImages/>
-          <SmallTabsImages/>
-          <SmallTabsImages/>
-          <SmallTabsImages/>
-          <SmallTabsImages/>
-          <SmallTabsImages/>
-          <SmallTabsImages/>
-          <SmallTabsImages/>
+          <SmallTabsImages />
+          <SmallTabsImages />
+          <SmallTabsImages />
+          <SmallTabsImages />
+          <SmallTabsImages />
+          <SmallTabsImages />
+          <SmallTabsImages />
+          <SmallTabsImages />
+          <SmallTabsImages />
+          <SmallTabsImages />
+          <SmallTabsImages />
+          <SmallTabsImages />
+          <SmallTabsImages />
+          <SmallTabsImages />
+          <SmallTabsImages />
+          <SmallTabsImages />
+          <SmallTabsImages />
+          <SmallTabsImages />
+          <SmallTabsImages />
+          <SmallTabsImages />
+          <SmallTabsImages />
+          <SmallTabsImages />
+          <SmallTabsImages />
+          <SmallTabsImages />
+          <SmallTabsImages />
+          <SmallTabsImages />
+          <SmallTabsImages />
+          <SmallTabsImages />
+          <SmallTabsImages />
+          <SmallTabsImages />
         </div>
       </section>
       <div className='py-8'></div>
