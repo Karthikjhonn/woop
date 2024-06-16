@@ -21,7 +21,9 @@ body {
     -webkit-touch-callout: none;
     /* Disable long tap options */
 }
-
+dialog{
+    overscroll-behavior: contain !important;
+}
 @layer utilities {
 
     /* Hide scrollbar for Chrome, Safari and Opera */

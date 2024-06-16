@@ -6,7 +6,7 @@ import { HiOutlineShoppingCart } from "react-icons/hi";
 import { FaRegHeart } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa";
 import { NavLink } from 'react-router-dom';
-import { ProductCountContext } from '../App';
+import { CountContext } from '../context/ProductCountContext';
 
 
 function BottomNavbar() {
@@ -29,7 +29,7 @@ function BottomNavbar() {
     };
 
 
-    const { state, dispatch } = useContext(ProductCountContext);
+    const { state, dispatch } = useContext(CountContext);
     const [prdCount, setPrdCount] = useState(state.count);
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
