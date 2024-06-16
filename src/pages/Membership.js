@@ -3,9 +3,9 @@ import { BsStars } from "react-icons/bs";
 import { FaCircleCheck } from "react-icons/fa6";
 
 function Membership() {
-    window.scroll({
-        top:0,
-    })
+    // window.scroll({
+    //     top:0,
+    // })
     return (
         <>
             <div className='pt-8 relative'>

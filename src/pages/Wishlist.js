@@ -4,9 +4,9 @@ import WishlistCard from '../components/WishlistCard';
 import { useNavigate } from 'react-router-dom';
 
 function Wishlist() {
-    window.scroll({
-        top: 0,
-    })
+    // window.scroll({
+    //     top: 0,
+    // })
     const navigate = useNavigate();
     let wishlistProduct;
     const likedProduct = JSON.parse(localStorage.getItem('likedProduct'));

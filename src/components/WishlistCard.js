@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
 import ProductCount from './ProductCount';
-import { ProductCountContext } from '../App';
 import { useNavigate } from 'react-router-dom';
 import { IoIosClose } from "react-icons/io";
 

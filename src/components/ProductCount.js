@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { ProductCountContext } from '../App';
+import { CountContext } from '../context/ProductCountContext';
 
 function ProductCount({ id }) {
   console.log("product count component", id);
-  const { state, dispatch } = useContext(ProductCountContext);
+  const { state, dispatch } = useContext(CountContext);
   const [prdCount, setProdCount] = useState(0);
 
 function setPrdCount(){
