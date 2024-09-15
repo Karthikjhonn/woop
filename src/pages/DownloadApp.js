@@ -4,7 +4,7 @@ import "./button.css";
 function DownloadApp() {
   const handleDownload = () => {
     const fileUrl =
-      "https://kwoop.netlify.app/asset/images/caffino/application-074e5eb2-02c6-48e7-adee-7f4b92500428.zip";
+      "https://kwoop.netlify.app/asset/apk/application-074e5eb2-02c6-48e7-adee-7f4b92500428.zip";
     saveAs(fileUrl, "Caffino-application.zip");
   };
 
