@@ -3,9 +3,8 @@ import { saveAs } from "file-saver";
 import "./button.css";
 function DownloadApp() {
   const handleDownload = () => {
-    
     const fileUrl =
-      "https://kwoop.netlify.app/asset/apk/application-a5a9e3b1-be3d-40e2-b173-9a639af74391.zip";
+      "https://kwoop.netlify.app/asset/apk/application-3cd1fdcf-9555-4423-a1d0-c222594a3389.zip";
     saveAs(fileUrl, "Caffino-application.zip");
   };
 
