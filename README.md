@@ -68,3 +68,35 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+import React from "react";
+
+type ButtonProps = {
+  title: string;                   // Text displayed on the button
+  onClick: () => void;             // Function to handle click events
+  disabled?: boolean;              // Optional: Disable the button
+  variant?: "primary" | "secondary" | "danger"; // Button styles
+};
+
+const Button: React.FC<ButtonProps> = ({ title, onClick, disabled = false, variant = "primary" }) => {
+  // Define styles based on the variant
+  const baseStyle = "px-4 py-2 rounded font-medium text-white focus:outline-none";
+  const variantStyles: Record<typeof variant, string> = {
+    primary: "bg-blue-500 hover:bg-blue-600",
+    secondary: "bg-gray-500 hover:bg-gray-600",
+    danger: "bg-red-500 hover:bg-red-600",
+  };
+
+  return (
+    <button
+      onClick={onClick}
+      disabled={disabled}
+      className={`${baseStyle} ${variantStyles[variant]} ${disabled ? "opacity-50 cursor-not-allowed" : ""}`}
+    >
+      {title}
+    </button>
+  );
+};
+
+export default Button;
